@@ -1,4 +1,4 @@
-import config, time
+import config, math, time
 import numpy as np
 
 from mesa import Agent
@@ -53,6 +53,15 @@ class PyDemicAgent(Agent):
         return colliding_agents
 
     def apply_collision(self, agent):
+        # # Move agents out of each other
+        # angle = math.atan((agent.pos[1] - self.pos[1]) / (agent.pos[0] - self.pos[0]))
+        # distance = math.sqrt((agent.pos[0] - self.pos[0])**2 + (agent.pos[1] - self.pos[1])**2)
+        # distance_to_move = (self.radius + agent.radius) - distance
+        # new_x = agent.pos[0] + math.cos(angle) * distance_to_move
+        # new_y = agent.pos[1] + math.cos(angle) * distance_to_move
+        # self.model.space.move_agent(agent, (new_x, new_y))
+
+        # Calculate new headings
         tangent_x = abs(agent.pos[1] - self.pos[1])
         tangent_y = -1*abs(agent.pos[0] - self.pos[0])
         tangent_vector = np.array([tangent_x, tangent_y])

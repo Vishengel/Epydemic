@@ -18,6 +18,6 @@ def agent_draw(agent):
     return portrayal
 
 def init_server(model_parameters):
-    pydemic_canvas = SimpleCanvas(agent_draw, 500, 500)
+    pydemic_canvas = SimpleCanvas(agent_draw, config.canvas_height, config.canvas_width)
     server = ModularServer(PyDemicModel, [pydemic_canvas], name="PyDemic", model_params=model_parameters)
     server.launch()

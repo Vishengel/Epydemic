@@ -19,9 +19,8 @@ class PyDemicModel(Model):
 
     def make_agents(self):
         for idx in range(self.n_agents):
-            x_pos = random.random() * self.space.x_max
-            y_pos = random.random() * self.space.y_max
-            pos = (x_pos, y_pos)
+
+            pos = self.find_new_pos()
 
             if idx == 0:
                 agent = PyDemicAgent(idx, self, pos, infected=True)
@@ -30,3 +29,17 @@ class PyDemicModel(Model):
 
             self.space.place_agent(agent, pos)
             self.schedule.add(agent)
+
+    def find_new_pos(self):
+        found = False
+
+        while not found:
+            x_pos = random.random() * self.space.x_max
+            y_pos = random.random() * self.space.y_max
+            found = True
+
+            for agent in self.schedule.agents:
+                if ((x_pos - agent.pos[0]) ** 2 + (y_pos - agent.pos[1]) ** 2) <= (2*agent.radius) ** 2:
+                    found = False
+
+        return (x_pos, y_pos)
